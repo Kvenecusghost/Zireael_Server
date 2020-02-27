@@ -1,3 +1,22 @@
 from django.db import models
 
 # Create your models here.
+class node(models.Model):
+    ttnDevId = models.CharField(max_length=32)
+    longtitude = models.IntegerField()
+    lattitude = models.IntegerField()
+
+    class Meta:
+        ordering = []
+
+class log(models.Model):
+    node = models.ForeignKey('node', on_delete=models.CASCADE, blank=True, null=True)
+    time = models.DateTimeField()
+    humidity1 = models.IntegerField()
+    humidity2 = models.IntegerField()
+    humidity3 = models.IntegerField()
+    temperature1 = models.IntegerField()
+    temperature2 = models.IntegerField()
+    temperature3 = models.IntegerField()
+    leafWettnes = models.IntegerField()
+    battery = models.IntegerField()
