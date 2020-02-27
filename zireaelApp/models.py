@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class node(models.Model):
+class Node(models.Model):
     ttnDevId = models.CharField(max_length=32)
     longtitude = models.IntegerField()
     lattitude = models.IntegerField()
@@ -9,7 +9,7 @@ class node(models.Model):
     class Meta:
         ordering = []
 
-class log(models.Model):
+class Log(models.Model):
     node = models.ForeignKey('node', on_delete=models.CASCADE, blank=True, null=True)
     time = models.DateTimeField()
     humidity1 = models.IntegerField()
