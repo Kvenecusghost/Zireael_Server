@@ -2,6 +2,8 @@
 import requests
 # import sqlite3
 import psycopg2
+import pytz
+from datetime import datetime
 
 
 # conn = sqlite3.connect('zireael.db')
@@ -26,47 +28,61 @@ if resp.status_code != 200:
 
 for note in resp.json():
     t = (note['device_id'],)
-    cursor.execute(
-        """select 
-                id
-            from 
-                public."zireaelApp_node"
-            where 
-                "ttnDevId"=%s""", t)
-    device_id = cursor.fetchone()[0]
-    print(device_id)
+    cursor.execute("""
+        select 
+            id
+        from 
+            public."zireaelApp_node"
+        where 
+            "ttnDevId"=%s
+        """, t)
+    node_id = cursor.fetchone()[0]
 
     t = (note['time'],)
-    num = cursor.execute("""SELECT COUNT (*)
-            FROM data WHERE time=?""", t).fetchone()[0]
-#     if num == 0:
-#         t = (
-#             note['time'],
-#             str(device_id),
-#             note['h0'],
-#             note['h1'],
-#             note['h2'],
-#             note['h3'],
-#             note['t0'],
-#             note['t1'],
-#             note['t2'],
-#             note['t3'],
-#             note['vbat'],
-#         )
-#         cursor.execute("""INSERT INTO data(time, 
-#                                             device_id,
-#                                             humidity_0,
-#                                             humidity_1,
-#                                             humidity_2,
-#                                             humidity_3,
-#                                             temperature_0,
-#                                             temperature_1,
-#                                             temperature_2,
-#                                             temperature_3,
-#                                             battery)
-#                             VALUES(?,?,?,?,?,?,?,?,?,?,?)""", t)
-#         print("Successfully added data")
-#     # print(devId)
+    cursor.execute("""
+        SELECT COUNT 
+            (*)
+        FROM 
+            public."zireaelApp_log" 
+        WHERE 
+            "ttnTime"=%s
+        """, t)
+    num = cursor.fetchone()[0]
+    print(num)
+    if num == 0:
+        t = (
+            note['time'],
+            str(node_id),
+            note['h0'],
+            note['h1'],
+            note['h2'],
+            note['h3'],
+            note['t0'],
+            note['t1'],
+            note['t2'],
+            note['t3'],
+            note['vbat'],
+        )
+        cursor.execute("""
+            INSERT INTO 
+                public."zireaelApp_log"(
+                    "ttnTime", 
+                    node_id,
+                    humidity_0,
+                    humidity_1,
+                    humidity_2,
+                    humidity_3,
+                    temperature_0,
+                    temperature_1,
+                    temperature_2,
+                    temperature_3,
+                    battery)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", t)
+        
+        print("Successfully added data")
+
+
+    # print(devId)
 
 
 # #     sql =   """INSERT INTO data(time, device_id)
