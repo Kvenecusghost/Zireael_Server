@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
-# Create your views here.
 
+import logging
+# Create your views here.
+logger = logging.getLogger(__name__)
 
 def index(request):
-    
-    return HttpResponse("Hello!")
+    print("Hello...")
+    # return HttpResponse("Hello!")
