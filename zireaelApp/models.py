@@ -13,6 +13,7 @@ class Node(models.Model):
 class Log(models.Model):
     node = models.ForeignKey('node', on_delete=models.CASCADE, blank=True, null=True)
     ttnTime = models.CharField(max_length=40, null=True)
+    localTime = models.DateTimeField(null=True)
     humidity_0 = models.IntegerField()
     humidity_1 = models.IntegerField()
     humidity_2 = models.IntegerField()

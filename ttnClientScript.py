@@ -52,6 +52,7 @@ for note in resp.json():
     if num == 0:
         t = (
             note['time'],
+            datetime.now(),
             str(node_id),
             note['h0'],
             note['h1'],
@@ -67,6 +68,7 @@ for note in resp.json():
             INSERT INTO 
                 public."zireaelApp_log"(
                     "ttnTime", 
+                    "localTime",
                     node_id,
                     humidity_0,
                     humidity_1,
@@ -77,20 +79,9 @@ for note in resp.json():
                     temperature_2,
                     temperature_3,
                     battery)
-            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", t)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", t)
         
         print("Successfully added data")
-
-
-    # print(devId)
-
-
-# #     sql =   """INSERT INTO data(time, device_id)
-# #                 VALUES(0, 0, 0)
-# #             """
-# #     sqlnote =
-
-# #     print(note)
 
 
 conn.commit()
