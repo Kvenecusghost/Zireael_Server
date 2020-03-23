@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Node(models.Model):
     ttnDevId = models.CharField(max_length=32)
+    lastSeen = models.DateTimeField(null=True)
     longtitude = models.IntegerField()
     lattitude = models.IntegerField()
 
