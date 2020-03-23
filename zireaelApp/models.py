@@ -4,8 +4,8 @@ from django.db import models
 class Node(models.Model):
     ttnDevId = models.CharField(max_length=32)
     lastSeen = models.DateTimeField(null=True)
-    longtitude = models.IntegerField()
-    lattitude = models.IntegerField()
+    longtitude = models.FloatField()
+    lattitude = models.FloatField()
 
     class Meta:
         ordering = []
